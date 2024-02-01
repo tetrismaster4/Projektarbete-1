@@ -10,13 +10,14 @@ import java.util.concurrent.BlockingQueue;
 import javax.swing.*;
 
 
-public class SimpleWindow  {
+public class SimpleWindow implements GameIO {
     private JFrame window;
     private JTextArea text;
     private JTextField inString;
     private JButton go;
     private JPanel sPanel;
     private BlockingQueue<String> mq;
+
 
     public SimpleWindow(String title){
         window = new JFrame(title);
@@ -63,11 +64,12 @@ public class SimpleWindow  {
         }
     }
 
-
+@Override
     public boolean yesNo(String prompt) {
         int answer = JOptionPane.showConfirmDialog(null, prompt);
         return answer == JOptionPane.YES_OPTION;
     }
+    @Override
     public String getString(){
 
         try {
@@ -77,11 +79,11 @@ public class SimpleWindow  {
             return "Should not happen";
         }
     }
-
+@Override
     public void addString(String s){
         text.append(s);
     }
-
+@Override
     public void clear(){
         text.setText("");
     }

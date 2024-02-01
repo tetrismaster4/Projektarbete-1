@@ -1,30 +1,35 @@
 public class Game {
+private  GameIO io;
 
-    private static void gameLoop() {
+    public Game(GameIO io) {
+        this.io = io;
+    }
+
+    public void gameLoop() {
         boolean answer = true;
         while (answer) { // spel loppen
             String goal = makeGoal();
-            gameWindow.clear();
-            gameWindow.addString("New game:\n");
+            io.clear();
+            io.addString("New game:\n");
             //comment out or remove next line to play real games!
 
-            gameWindow.addString("For practice, number is: " + goal + "\n");
-            String guess = gameWindow.getString();
-            gameWindow.addString(guess +"\n");
+            io.addString("For practice, number is: " + goal + "\n");
+            String guess = io.getString();
+            io.addString(guess +"\n");
             int nGuess = 1;
             String bbcc = checkBC(goal, guess);
-            gameWindow.addString(bbcc + "\n");
+            io.addString(bbcc + "\n");
             while ( ! bbcc.equals("BBBB,")) {
                 nGuess++;
-                guess = gameWindow.getString();
-                gameWindow.addString(guess +": ");
+                guess = io.getString();
+                io.addString(guess +": ");
                 bbcc = checkBC(goal, guess);
-                gameWindow.addString(bbcc + "\n");
+                io.addString(bbcc + "\n");
             }
             //int ok = stmt.executeUpdate("INSERT INTO results " + // andväns inte
             //        "(result, playerid) VALUES (" + nGuess + ", " +	id + ")" );
             //  showTopTen();
-            answer = gameWindow.yesNo("Correct, it took " + nGuess
+            answer = io.yesNo("Correct, it took " + nGuess
                     + " guesses\nContinue?");
 
         }

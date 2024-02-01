@@ -18,8 +18,8 @@ public class Main {
 
         // login
         loggIn();
-
-        gameLoop();
+        Game game = new Game(gameWindow);
+        game.gameLoop();
         gameWindow.exit();
     }
 
