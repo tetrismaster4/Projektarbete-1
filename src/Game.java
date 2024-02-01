@@ -26,9 +26,9 @@ private  GameIO io;
                 bbcc = checkBC(goal, guess);
                 io.addString(bbcc + "\n");
             }
-            //int ok = stmt.executeUpdate("INSERT INTO results " + // andväns inte
-            //        "(result, playerid) VALUES (" + nGuess + ", " +	id + ")" );
-            //  showTopTen();
+            int ok = stmt.executeUpdate("INSERT INTO results " + // andväns inte
+                    "(result, playerid) VALUES (" + nGuess + ", " +	id + ")" );
+              showTopTen();
             answer = io.yesNo("Correct, it took " + nGuess
                     + " guesses\nContinue?");
 

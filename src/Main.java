@@ -8,29 +8,17 @@ import java.util.ArrayList;
 
 
 public class Main {
-    static Connection connection;
-    static Statement stmt;
-    static ResultSet rs;
+
     static SimpleWindow gameWindow;
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException, InterruptedException {
         gameWindow = new SimpleWindow("Moo");
 
         // login
-        loggIn();
-        Game game = new Game(gameWindow);
-        game.gameLoop();
-        gameWindow.exit();
-    }
-
-    private static void loggIn() throws SQLException, InterruptedException {
         gameWindow.addString("Enter your user name:\n");
         String userName = gameWindow.getString(); // hämtar texten i skrivfältet
-        int id = 0;
-        connection = DriverManager.getConnection("jdbc:mysql://localhost/Moo","ulf","ulfpw");
-        stmt = connection.createStatement();
-        rs = stmt.executeQuery("select id,name from players where name = '" + userName + "'");
 
+        loggIn(userName);
         if (rs.next()) { //hämtar id med användarnamn
             id = rs.getInt("id");
         } else {
@@ -38,7 +26,14 @@ public class Main {
             Thread.sleep(5000);
             gameWindow.exit();
         } // användar namn finns inte stämger pogramet
+
+
+        Game game = new Game(gameWindow);
+        game.gameLoop();
+        gameWindow.exit();
     }
+
+
 
 
 
