@@ -1,38 +1,44 @@
+import java.sql.SQLException;
+
 public class Game {
 private  GameIO io;
+    private DataBase dataBase;
+private int id;
 
-    public Game(GameIO io) {
+    public Game(GameIO io, DataBase dataBase, int id) {
         this.io = io;
+        this.dataBase = dataBase;
+        this.id = id;
     }
 
-    public void gameLoop() {
+    public void gameLoop() throws SQLException {
         boolean answer = true;
         while (answer) { // spel loppen
             String goal = makeGoal();
             io.clear();
-            io.addString("New game:\n");
+            io.print("New game:\n");
             //comment out or remove next line to play real games!
 
-            io.addString("For practice, number is: " + goal + "\n");
-            String guess = io.getString();
-            io.addString(guess +"\n");
+            io.print("For practice, number is: " + goal + "\n");
+            String guess = io.getUserInput();
+            io.print(guess +"\n");
             int nGuess = 1;
             String bbcc = checkBC(goal, guess);
-            io.addString(bbcc + "\n");
+            io.print(bbcc + "\n");
             while ( ! bbcc.equals("BBBB,")) {
                 nGuess++;
-                guess = io.getString();
-                io.addString(guess +": ");
+                guess = io.getUserInput();
+                io.print(guess +": ");
                 bbcc = checkBC(goal, guess);
-                io.addString(bbcc + "\n");
+                io.print(bbcc + "\n");
             }
-            int ok = stmt.executeUpdate("INSERT INTO results " + // andväns inte
-                    "(result, playerid) VALUES (" + nGuess + ", " +	id + ")" );
-              showTopTen();
+            dataBase.updateResult(nGuess, id);
             answer = io.yesNo("Correct, it took " + nGuess
                     + " guesses\nContinue?");
+            showTopTen();
 
         }
+
     }
 
 
@@ -75,6 +81,17 @@ private  GameIO io;
             result = result + "C";
         }
         return result;
+
+    }
+    private void showTopTen() throws SQLException {
+        var topList = dataBase.getTopTen();
+        io.print("Top Ten List\n    Player     Average\n");
+        int pos = 1;
+        topList.sort((p1,p2)->(Double.compare(p1.average, p2.average)));
+        for (PlayerAverage p : topList) {
+            io.print(String.format("%3d %-10s%5.2f%n", pos, p.name, p.average));
+            if (pos++ == 10) break;
+        }
 
     }
 }

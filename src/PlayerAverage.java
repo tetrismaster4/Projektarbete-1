@@ -1,4 +1,4 @@
-class PlayerAverage {
+public class PlayerAverage {
     String name;
     double average;
 

@@ -70,7 +70,7 @@ public class SimpleWindow implements GameIO {
         return answer == JOptionPane.YES_OPTION;
     }
     @Override
-    public String getString(){
+    public String getUserInput(){
 
         try {
             return mq.take();
@@ -80,7 +80,7 @@ public class SimpleWindow implements GameIO {
         }
     }
 @Override
-    public void addString(String s){
+    public void print(String s){
         text.append(s);
     }
 @Override

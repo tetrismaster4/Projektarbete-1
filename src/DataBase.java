@@ -7,18 +7,16 @@ public class DataBase {
 
     public DataBase() {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/Moo","ulf","ulfpw");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/moo","root","rootrootroot1");
             stmt = connection.createStatement();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public   int loggIn(String userName) throws SQLException, InterruptedException {
+    public   int login(String userName) throws SQLException, InterruptedException {
         int id = 0;
-
         ResultSet rs = stmt.executeQuery("select id,name from players where name = '" + userName + "'");
-
         if (rs.next()) { //hämtar id med användarnamn
             return rs.getInt("id");
         }
@@ -48,5 +46,11 @@ public class DataBase {
 
         }
         return topList;
+    }
+
+    public void updateResult(int nGuess, int id) throws SQLException {
+        int ok = stmt.executeUpdate("INSERT INTO results " + // andväns inte
+                "(result, playerid) VALUES (" + nGuess + ", " +	id + ")" );
+
     }
 }

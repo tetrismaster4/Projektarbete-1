@@ -2,9 +2,9 @@ public interface GameIO {
 
     public void clear();
 
-    public void addString(String s);
+    public void print(String s);
 
-    public String getString();
+    public String getUserInput();
 
     public boolean yesNo(String prompt);
 
