@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DataBase {
      private Connection connection;
@@ -26,7 +27,26 @@ public class DataBase {
         }
 
     }
-    public void getTopTen (){
+    public ArrayList<PlayerAverage> getTopTen () throws SQLException {
 
+        ArrayList<PlayerAverage> topList = new ArrayList<>();
+        ResultSet rs2;
+        ResultSet rs = stmt.executeQuery("select * from players");
+        while(rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            rs2 = stmt.executeQuery("select * from results where playerid = "+ id );
+            int nGames = 0;
+            int totalGuesses = 0;
+            while (rs2.next()) {
+                nGames++;
+                totalGuesses += rs2.getInt("result");
+            }
+            if (nGames > 0) {
+                topList.add(new PlayerAverage(name, (double)totalGuesses/nGames));
+            }
+
+        }
+        return topList;
     }
 }

@@ -1,5 +1,3 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,6 +8,8 @@ import java.util.ArrayList;
 public class Main {
 
     static SimpleWindow gameWindow;
+   static public DataBase dataBase= new DataBase();
+
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException, InterruptedException {
         gameWindow = new SimpleWindow("Moo");
@@ -34,39 +34,8 @@ public class Main {
     }
 
 
-
-
-
-
-    static class PlayerAverage {
-        String name;
-        double average;
-        public PlayerAverage(String name, double average) {
-            this.name = name;
-            this.average = average;
-        }
-    }
-
     static void showTopTen() throws SQLException {
-        ArrayList<PlayerAverage> topList = new ArrayList<>();
-        Statement stmt2 = connection.createStatement();
-        ResultSet rs2;
-        rs = stmt.executeQuery("select * from players");
-        while(rs.next()) {
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            rs2 = stmt2.executeQuery("select * from results where playerid = "+ id );
-            int nGames = 0;
-            int totalGuesses = 0;
-            while (rs2.next()) {
-                nGames++;
-                totalGuesses += rs2.getInt("result");
-            }
-            if (nGames > 0) {
-                topList.add(new PlayerAverage(name, (double)totalGuesses/nGames));
-            }
-
-        }
+        var topList = dataBase.getTopTen();
         gameWindow.addString("Top Ten List\n    Player     Average\n");
         int pos = 1;
         topList.sort((p1,p2)->(Double.compare(p1.average, p2.average)));
