@@ -20,6 +20,10 @@ public class SimpleWindow implements GameIO {
 
 
     public SimpleWindow(String title){
+        createWindow(title);
+    }
+
+    private void createWindow(String title) {
         window = new JFrame(title);
         window.setLayout(new BorderLayout());
         text = new JTextArea();
@@ -51,7 +55,6 @@ public class SimpleWindow implements GameIO {
     }
 
 
-
     private class GoListener implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             try {
@@ -64,11 +67,12 @@ public class SimpleWindow implements GameIO {
         }
     }
 
-@Override
-    public boolean yesNo(String prompt) {
+    @Override
+    public boolean continuePromptWindow(String prompt) {
         int answer = JOptionPane.showConfirmDialog(null, prompt);
         return answer == JOptionPane.YES_OPTION;
     }
+
     @Override
     public String getUserInput(){
 
@@ -79,11 +83,16 @@ public class SimpleWindow implements GameIO {
             return "Should not happen";
         }
     }
-@Override
+
+    @Override
     public void print(String s){
         text.append(s);
     }
-@Override
+
+    @Override
+    public void println(String s) {text.append(s + "\n");}
+
+    @Override
     public void clear(){
         text.setText("");
     }

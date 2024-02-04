@@ -22,7 +22,7 @@ public final class Game {
             int guessCount = runGame(isPracticeMode);
 
             dataBase.updateResult(guessCount, id);
-            continuePlaying = io.yesNo("Correct, it took " + guessCount
+            continuePlaying = io.continuePromptWindow("Correct, it took " + guessCount
                     + " guesses\nContinue?");
             showTopTen();
         }
@@ -92,11 +92,11 @@ public final class Game {
         return secretNumber;
     }
 
-    public String getUserInput() {
+    private String getUserInput() {
         return io.getUserInput();
     }
 
-    private record BullsAndCows(int bulls, int cows) {
+    public record BullsAndCows(int bulls, int cows) {
         boolean isCorrect() {
             return bulls == 4;
         }
@@ -115,7 +115,7 @@ public final class Game {
         }
     }
 
-    private BullsAndCows countBullsAndCows(String secretNumber, String guess) {
+    public BullsAndCows countBullsAndCows(String secretNumber, String guess) {
         guess += "    ";
         int misplacedNumbers = 0;
         int correctNumbers = 0;

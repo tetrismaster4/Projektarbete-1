@@ -4,10 +4,11 @@ import java.sql.SQLException;
 public class Main {
 
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException, InterruptedException {
+    public static void main(String[] args) throws  SQLException, InterruptedException {
 
-        SimpleWindow gameWindow = new SimpleWindow("Moo");
+        SimpleWindow gameWindow = new SimpleWindow("CowsAndBulls");
         DataBase dataBase = new DataBase();
+
         // login
         gameWindow.print("Enter your user name:\n");
         String userName = gameWindow.getUserInput(); // hämtar texten i skrivfältet

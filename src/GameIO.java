@@ -6,7 +6,7 @@ public interface GameIO {
 
     public String getUserInput();
 
-    public boolean yesNo(String prompt);
+    boolean continuePromptWindow(String prompt);
 
 
 }

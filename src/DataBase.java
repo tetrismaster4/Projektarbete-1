@@ -14,8 +14,11 @@ public class DataBase {
         }
     }
 
-    public   int login(String userName) throws SQLException, InterruptedException {
+    public   int login(String userName) throws SQLException {
         int id = 0;
+        if (stmt == null){
+            throw new SQLException("faild to make connection");
+        }
         ResultSet rs = stmt.executeQuery("select id,name from players where name = '" + userName + "'");
         if (rs.next()) { //hämtar id med användarnamn
             return rs.getInt("id");
